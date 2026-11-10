@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    # Tests run against a fresh in-memory H2; Flyway applies the same migrations at context startup.
+    url: jdbc:h2:mem:springstuff-test;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""

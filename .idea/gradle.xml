@@ -24,18 +24,87 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/spring-stuff" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$/spring-stuff" />
-          </set>
-        </option>
-      </GradleProjectSettings>
-      <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/../jb-exposed" name="exposed">
+                <projects>
+                  <project path="$PROJECT_DIR$/../jb-exposed" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-bom" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-core" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-crypt" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-dao" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-dao-r2dbc" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-dao-r2dbc-tests" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-gradle-plugin" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-java-time" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-jdbc" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-jdbc-r2dbc-tests" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-jodatime" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-json" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-kotlin-datetime" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-maven-plugin" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-migration-core" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-migration-jdbc" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-migration-r2dbc" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-money" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-plugin-core" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-r2dbc" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-r2dbc-tests" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-spring-boot-starter" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-spring-boot4-data-starter" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-spring-boot4-starter" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-spring-data4" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-tests" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/exposed-version-catalog" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/spring-transaction" />
+                  <project path="$PROJECT_DIR$/../jb-exposed/spring7-transaction" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/../jb-exposed/buildSrc" name="buildSrc">
+                <projects>
+                  <project path="$PROJECT_DIR$/../jb-exposed/buildSrc" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="externalProjectPath" value="$PROJECT_DIR$/springstuff" />
+        <option name="gradleJvm" value="temurin-21" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/springstuff" />
+            <option value="$PROJECT_DIR$/../jb-exposed" />
+            <option value="$PROJECT_DIR$/../jb-exposed/buildSrc" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-bom" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-core" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-crypt" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-dao" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-dao-r2dbc" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-dao-r2dbc-tests" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-gradle-plugin" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-java-time" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-jdbc" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-jdbc-r2dbc-tests" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-jodatime" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-json" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-kotlin-datetime" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-maven-plugin" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-migration-core" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-migration-jdbc" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-migration-r2dbc" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-money" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-plugin-core" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-r2dbc" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-r2dbc-tests" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-spring-boot-starter" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-spring-boot4-data-starter" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-spring-boot4-starter" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-spring-data4" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-tests" />
+            <option value="$PROJECT_DIR$/../jb-exposed/exposed-version-catalog" />
+            <option value="$PROJECT_DIR$/../jb-exposed/spring-transaction" />
+            <option value="$PROJECT_DIR$/../jb-exposed/spring7-transaction" />
           </set>
         </option>
       </GradleProjectSettings>

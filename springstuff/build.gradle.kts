@@ -3,6 +3,7 @@ plugins {
     kotlin("plugin.spring") version "2.4.20"
     id("org.springframework.boot") version "4.1.2"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.jetbrains.exposed.plugin") // Exposed Gradle plugin, resolved from the composite jb-exposed build
 }
 
 group = "org.example"
@@ -28,8 +29,8 @@ val generatedCxfDir = layout.buildDirectory.dir("generated/cxf")
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-h2console")
-    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
+    implementation("org.springframework.boot:spring-boot-starter-flyway")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("tools.jackson.module:jackson-module-kotlin")
 
@@ -42,7 +43,6 @@ dependencies {
     implementation("jakarta.xml.bind:jakarta.xml.bind-api")
     implementation("com.sun.xml.bind:jaxb-impl")
     implementation("jakarta.xml.ws:jakarta.xml.ws-api")
-    testImplementation("org.springframework.security:spring-security-test")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
@@ -53,6 +53,21 @@ dependencies {
     cxf("org.apache.cxf:cxf-tools-wsdlto-core:4.0.0")
     cxf("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.0.0")
     cxf("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.0.0")
+}
+
+// Exposed migration generator (./gradlew generateMigrations):
+// scans the table objects in the given packages and diffs them against the reference database,
+// writing versioned SQL scripts to src/main/resources/db/migration (Flyway's default location).
+exposed {
+    migrations {
+        tablesPackages.set(listOf("org.example.springstuff.domain"))
+        // The reference "current schema" is the same file-based H2 the app runs on: Flyway applies the
+        // generated scripts to it at startup, so the next run produces exactly the incremental diff.
+        // Workflow: change a Table object -> ./gradlew generateMigrations -> restart the app.
+        databaseUrl.set("jdbc:h2:file:./data/springstuff;AUTO_SERVER=TRUE")
+        databaseUser.set("sa")
+        databasePassword.set("")
+    }
 }
 
 val wsdl2java by tasks.registering(JavaExec::class) {
