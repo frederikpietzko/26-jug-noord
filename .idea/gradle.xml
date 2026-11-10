@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/spring-compose-html" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/spring-compose-html" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-counter" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-counter/frontend" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-counter/server" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-counter/shared" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-islands" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-islands/frontend" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-islands/server" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/hydration-islands/shared" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/ssr-todo" />
+            <option value="$PROJECT_DIR$/spring-compose-html/examples/ssr-todo-java" />
+            <option value="$PROJECT_DIR$/spring-compose-html/spring-compose-html-webflux" />
+            <option value="$PROJECT_DIR$/spring-compose-html/spring-compose-html-webmvc" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/spring-stuff" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/spring-stuff" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/springstuff" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/springstuff" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

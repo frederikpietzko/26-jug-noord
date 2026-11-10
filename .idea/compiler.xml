@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="spring-compose-html.examples.hydration-counter.frontend" target="25" />
+      <module name="spring-compose-html.examples.hydration-counter.server" target="25" />
+      <module name="spring-compose-html.examples.hydration-counter.server.main" target="25" />
+      <module name="spring-compose-html.examples.hydration-counter.server.test" target="25" />
+      <module name="spring-compose-html.examples.hydration-counter.shared" target="25" />
+      <module name="spring-compose-html.examples.hydration-counter.shared.jvmMain" target="25" />
+      <module name="spring-compose-html.examples.hydration-counter.shared.jvmTest" target="25" />
+      <module name="spring-compose-html.examples.hydration-islands.frontend" target="25" />
+      <module name="spring-compose-html.examples.hydration-islands.server" target="25" />
+      <module name="spring-compose-html.examples.hydration-islands.server.main" target="25" />
+      <module name="spring-compose-html.examples.hydration-islands.server.test" target="25" />
+      <module name="spring-compose-html.examples.hydration-islands.shared" target="25" />
+      <module name="spring-compose-html.examples.hydration-islands.shared.jvmMain" target="25" />
+      <module name="spring-compose-html.examples.hydration-islands.shared.jvmTest" target="25" />
+      <module name="spring-compose-html.examples.ssr-todo" target="25" />
+      <module name="spring-compose-html.examples.ssr-todo-java" target="25" />
+      <module name="spring-compose-html.examples.ssr-todo-java.main" target="25" />
+      <module name="spring-compose-html.examples.ssr-todo-java.test" target="25" />
+      <module name="spring-compose-html.examples.ssr-todo.main" target="25" />
+      <module name="spring-compose-html.examples.ssr-todo.test" target="25" />
+      <module name="spring-compose-html.spring-compose-html-webflux" target="17" />
+      <module name="spring-compose-html.spring-compose-html-webflux.main" target="17" />
+      <module name="spring-compose-html.spring-compose-html-webflux.test" target="17" />
+      <module name="spring-compose-html.spring-compose-html-webmvc" target="17" />
+      <module name="spring-compose-html.spring-compose-html-webmvc.main" target="17" />
+      <module name="spring-compose-html.spring-compose-html-webmvc.test" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="spring-compose-html.examples.hydration-counter.server" options="-parameters" />
+      <module name="spring-compose-html.examples.hydration-counter.server.main" options="-parameters" />
+      <module name="spring-compose-html.examples.hydration-counter.server.test" options="-parameters" />
+      <module name="spring-compose-html.examples.hydration-islands.server" options="-parameters" />
+      <module name="spring-compose-html.examples.hydration-islands.server.main" options="-parameters" />
+      <module name="spring-compose-html.examples.hydration-islands.server.test" options="-parameters" />
+      <module name="spring-compose-html.examples.ssr-todo" options="-parameters" />
+      <module name="spring-compose-html.examples.ssr-todo-java" options="-parameters" />
+      <module name="spring-compose-html.examples.ssr-todo-java.main" options="-parameters" />
+      <module name="spring-compose-html.examples.ssr-todo-java.test" options="-parameters" />
+      <module name="spring-compose-html.examples.ssr-todo.main" options="-parameters" />
+      <module name="spring-compose-html.examples.ssr-todo.test" options="-parameters" />
+      <module name="springstuff" options="-parameters" />
+      <module name="springstuff.main" options="-parameters" />
+      <module name="springstuff.test" options="-parameters" />
+    </option>
+  </component>
+</project>

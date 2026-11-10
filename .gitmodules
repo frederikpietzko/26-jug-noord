@@ -1,0 +1,3 @@
+[submodule "spring-compose-html"]
+	path = spring-compose-html
+	url = git@github.com:sdeleuze/spring-compose-html.git

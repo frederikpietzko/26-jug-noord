@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.baeldung.com/springsoap/gen"
+           targetNamespace="http://www.baeldung.com/springsoap/gen" elementFormDefault="qualified">
+
+    <xs:element name="getCountryRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getCountryResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="country" type="tns:country"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllCountriesRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="includeDetails" type="xs:boolean" minOccurs="0"/>
+                <xs:element name="filterCriteria" type="tns:filterCriteria" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getAllCountriesResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="countries" type="tns:countriesDataContainer"/>
+                <xs:element name="metadata" type="tns:responseMetadata" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="filterCriteria">
+        <xs:sequence>
+            <xs:element name="region" type="xs:string" minOccurs="0"/>
+            <xs:element name="minPopulation" type="xs:long" minOccurs="0"/>
+            <xs:element name="maxPopulation" type="xs:long" minOccurs="0"/>
+            <xs:element name="currencies" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="currency" type="tns:currency" maxOccurs="unbounded"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="countriesDataContainer">
+        <xs:sequence>
+            <xs:element name="country" type="tns:countryDetails" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="responseMetadata">
+        <xs:sequence>
+            <xs:element name="totalCount" type="xs:int"/>
+            <xs:element name="generatedAt" type="xs:dateTime"/>
+            <xs:element name="version" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="countryDetails">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="population" type="xs:int"/>
+            <xs:element name="capital" type="xs:string"/>
+            <xs:element name="currency" type="tns:currency"/>
+            <xs:element name="geography" type="tns:geography" minOccurs="0"/>
+            <xs:element name="demographics" type="tns:demographics" minOccurs="0"/>
+            <xs:element name="languages" type="tns:languages" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="country">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="population" type="xs:int"/>
+            <xs:element name="capital" type="xs:string"/>
+            <xs:element name="currency" type="tns:currency"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="geography">
+        <xs:sequence>
+            <xs:element name="region" type="xs:string"/>
+            <xs:element name="areaInSqKm" type="xs:decimal"/>
+            <xs:element name="borders" type="tns:borders" minOccurs="0"/>
+            <xs:element name="climate" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="borders">
+        <xs:sequence>
+            <xs:element name="country" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="demographics">
+        <xs:sequence>
+            <xs:element name="gdpInBillions" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="lifeExpectancy" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="literacy" type="xs:decimal" minOccurs="0"/>
+            <xs:element name="medianAge" type="xs:decimal" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="languages">
+        <xs:sequence>
+            <xs:element name="language" type="tns:language" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="language">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="speakers" type="xs:long" minOccurs="0"/>
+            <xs:element name="isOfficial" type="xs:boolean" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="currency">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GBP"/>
+            <xs:enumeration value="EUR"/>
+            <xs:enumeration value="PLN"/>
+            <xs:enumeration value="USD"/>
+            <xs:enumeration value="JPY"/>
+            <xs:enumeration value="CNY"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

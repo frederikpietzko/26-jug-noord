@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="frontend-wasm-js-0.1.0-SNAPSHOT">
+    <output-path>$PROJECT_DIR$/spring-compose-html/examples/hydration-islands/frontend/build/libs</output-path>
+    <root id="archive" name="frontend-wasm-js-0.1.0-SNAPSHOT.jar" />
+  </artifact>
+</component>
