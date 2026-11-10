@@ -27,6 +27,9 @@ val cxf by configurations.creating {
 
 val generatedCxfDir = layout.buildDirectory.dir("generated/cxf")
 
+// Tiny launcher (src/migrations) that runs Exposed's MigrationGenerator in a forked JVM — see runMigrationGenerator below.
+val migrationLauncher: SourceSet = sourceSets.create("migrations")
+
 dependencies {
     implementation("org.springframework.boot:spring-boot-h2console")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
@@ -50,6 +53,13 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+    // exposed-plugin-core is substituted from the jb-exposed composite build, just like the other Exposed modules.
+    "migrationsImplementation"("org.jetbrains.exposed.plugin:exposed-plugin-core:1.5.1")
+    "migrationsImplementation"("org.jetbrains.exposed:exposed-core:1.5.1")
+    // JDBC drivers are only declared by exposed-gradle-plugin, so add the one for our reference database.
+    "migrationsRuntimeOnly"("com.h2database:h2")
+    "migrationsRuntimeOnly"("org.jetbrains.kotlin:kotlin-reflect")
+
     cxf("org.apache.cxf:cxf-tools-wsdlto-core:4.0.0")
     cxf("org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:4.0.0")
     cxf("org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:4.0.0")
@@ -68,6 +78,48 @@ exposed {
         databaseUser.set("sa")
         databasePassword.set("")
     }
+}
+
+// Workaround: the Exposed plugin runs MigrationGenerator in a Gradle worker, which always sees Gradle's bundled
+// kotlin-stdlib (2.0 on Gradle 8.14) and therefore fails with NoClassDefFoundError kotlin/time/Clock$System.
+// We keep the plugin + `exposed { }` DSL, but execute the generator in a forked JVM with our own (2.4) stdlib.
+val generateMigrationsTask = tasks.named<org.jetbrains.exposed.v1.gradle.plugin.GenerateMigrationsTask>("generateMigrations")
+
+val runMigrationGenerator by tasks.registering(JavaExec::class) {
+    description = "Runs the Exposed migration generator in a forked JVM (used by generateMigrations)."
+    mainClass.set("org.example.springstuff.migrations.GenerateMigrationsKt")
+    classpath = migrationLauncher.runtimeClasspath
+    javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
+    outputs.upToDateWhen { false }
+
+    val generator = generateMigrationsTask
+    val scanClasspath = files({ generator.get().classpath })
+    inputs.files(scanClasspath) // also wires the task dependencies (compileKotlin, processResources, ...)
+    jvmArgumentProviders.add(CommandLineArgumentProvider {
+        val task = generator.get()
+        buildMap {
+            put("tablesPackage", task.tablesPackage.getOrElse(""))
+            put("tablesPackages", task.tablesPackages.get().joinToString(","))
+            put("classpath", scanClasspath.asPath)
+            put("fileDirectory", task.fileDirectory.get().asFile.absolutePath)
+            put("filePrefix", task.filePrefix.get())
+            put("fileVersionFormat", task.fileVersionFormat.get().name)
+            put("fileSeparator", task.fileSeparator.get())
+            put("useUpperCaseDescription", task.useUpperCaseDescription.get().toString())
+            put("fileExtension", task.fileExtension.get())
+            task.fullFileName?.let { put("fullFileName", it) }
+            task.databaseUrl.orNull?.let { put("databaseUrl", it) }
+            task.databaseUser.orNull?.let { put("databaseUser", it) }
+            task.databasePassword.orNull?.let { put("databasePassword", it) }
+            task.testContainersImageName.orNull?.let { put("testContainersImageName", it) }
+            put("debug", logger.isDebugEnabled.toString())
+        }.map { (key, value) -> "-Dexposed.migrations.$key=$value" }
+    })
+}
+
+generateMigrationsTask.configure {
+    actions.clear() // drop the in-Gradle worker action ...
+    dependsOn(runMigrationGenerator) // ... and delegate to the forked JVM instead
 }
 
 val wsdl2java by tasks.registering(JavaExec::class) {
