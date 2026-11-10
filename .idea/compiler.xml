@@ -16,6 +16,7 @@
       <module name="spring-compose-html.examples.ssr-todo.test" options="-parameters" />
       <module name="springstuff" options="-parameters" />
       <module name="springstuff.main" options="-parameters" />
+      <module name="springstuff.migrations" options="-parameters" />
       <module name="springstuff.test" options="-parameters" />
     </option>
   </component>

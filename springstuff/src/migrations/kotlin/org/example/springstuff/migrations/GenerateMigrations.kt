@@ -1,5 +1,6 @@
 package org.example.springstuff.migrations
 
+import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.v1.core.InternalApi
 import org.jetbrains.exposed.v1.plugin.core.migration.MigrationConfig
 import org.jetbrains.exposed.v1.plugin.core.migration.MigrationGenerator
@@ -14,6 +15,9 @@ import java.io.File
  * MigrationGenerator). The Exposed plugin's worker always sees Gradle's stdlib, so the build runs the
  * generator here instead, on a classpath with an up-to-date stdlib. Configuration is passed as
  * `exposed.migrations.*` system properties by the `generateMigrations` task in build.gradle.kts.
+ *
+ * For an in-memory H2 reference database, the existing scripts in `fileDirectory` are applied with Flyway first,
+ * so the generator only emits the diff between those scripts and the current table definitions.
  */
 @OptIn(InternalApi::class)
 fun main() {
@@ -40,5 +44,13 @@ fun main() {
         testContainersImageName = prop("testContainersImageName"),
         debug = debug,
     )
+    val databaseUrl = config.databaseUrl
+    if (databaseUrl != null && databaseUrl.startsWith("jdbc:h2:mem:") && config.fileDirectory.walk().any { it.isFile }) {
+        Flyway.configure()
+            .dataSource(databaseUrl, config.databaseUser, config.databasePassword)
+            .locations("filesystem:${config.fileDirectory.absolutePath}")
+            .load()
+            .migrate()
+    }
     MigrationGenerator(config, MigrationLogger.stdout(debug)).generate()
 }

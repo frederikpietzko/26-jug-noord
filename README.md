@@ -2,4 +2,4 @@
 
 # This presentation
 
-![this presentation](https://github.com/frederikpietzko/26-jug-noord/qrcode.png)
+![this presentation](qrcode.png)

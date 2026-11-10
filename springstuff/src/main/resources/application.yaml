@@ -3,7 +3,8 @@ spring:
     name: springstuff
   datasource:
     # File-based H2 so the schema (and demo data) survives restarts; Flyway keeps it migrated.
-    # The Exposed generateMigrations task (./gradlew generateMigrations) diffs against this same database.
+    # The Exposed generateMigrations task (./gradlew generateMigrations) diffs against its own in-memory H2
+    # that it builds from the scripts in db/migration, so it doesn't touch (or lock) this database.
     url: jdbc:h2:file:./data/springstuff;AUTO_SERVER=TRUE
     username: sa
     password: ""

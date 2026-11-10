@@ -56,6 +56,8 @@ dependencies {
     // exposed-plugin-core is substituted from the jb-exposed composite build, just like the other Exposed modules.
     "migrationsImplementation"("org.jetbrains.exposed.plugin:exposed-plugin-core:1.5.1")
     "migrationsImplementation"("org.jetbrains.exposed:exposed-core:1.5.1")
+    // Replays the existing scripts into the in-memory reference database before diffing (version from the Boot BOM).
+    "migrationsImplementation"("org.flywaydb:flyway-core")
     // JDBC drivers are only declared by exposed-gradle-plugin, so add the one for our reference database.
     "migrationsRuntimeOnly"("com.h2database:h2")
     "migrationsRuntimeOnly"("org.jetbrains.kotlin:kotlin-reflect")
@@ -71,10 +73,10 @@ dependencies {
 exposed {
     migrations {
         tablesPackages.set(listOf("org.example.springstuff.domain"))
-        // The reference "current schema" is the same file-based H2 the app runs on: Flyway applies the
-        // generated scripts to it at startup, so the next run produces exactly the incremental diff.
+        // The reference "current schema" is a throwaway in-memory H2: the launcher (src/migrations) first applies
+        // the existing scripts from fileDirectory with Flyway, so the run produces exactly the incremental diff.
         // Workflow: change a Table object -> ./gradlew generateMigrations -> restart the app.
-        databaseUrl.set("jdbc:h2:file:./data/springstuff;AUTO_SERVER=TRUE")
+        databaseUrl.set("jdbc:h2:mem:exposed-migrations;DB_CLOSE_DELAY=-1")
         databaseUser.set("sa")
         databasePassword.set("")
     }
@@ -83,7 +85,8 @@ exposed {
 // Workaround: the Exposed plugin runs MigrationGenerator in a Gradle worker, which always sees Gradle's bundled
 // kotlin-stdlib (2.0 on Gradle 8.14) and therefore fails with NoClassDefFoundError kotlin/time/Clock$System.
 // We keep the plugin + `exposed { }` DSL, but execute the generator in a forked JVM with our own (2.4) stdlib.
-val generateMigrationsTask = tasks.named<org.jetbrains.exposed.v1.gradle.plugin.GenerateMigrationsTask>("generateMigrations")
+val generateMigrationsTask =
+    tasks.named<org.jetbrains.exposed.v1.gradle.plugin.GenerateMigrationsTask>("generateMigrations")
 
 val runMigrationGenerator by tasks.registering(JavaExec::class) {
     description = "Runs the Exposed migration generator in a forked JVM (used by generateMigrations)."
